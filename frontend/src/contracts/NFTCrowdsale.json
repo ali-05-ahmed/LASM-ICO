@@ -97,7 +97,10 @@
         ],
         "payable": false,
         "stateMutability": "nonpayable",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -119,7 +122,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -130,7 +136,10 @@
         "outputs": [],
         "payable": true,
         "stateMutability": "payable",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -152,7 +161,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -174,7 +186,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -196,7 +211,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -218,7 +236,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -240,7 +261,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -262,7 +286,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -284,7 +311,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -295,7 +325,10 @@
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -346,7 +379,10 @@
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -368,7 +404,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -390,7 +429,10 @@
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -412,7 +454,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -434,7 +479,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       {
@@ -456,7 +504,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       }
     ],
@@ -483,7 +534,10 @@
         ],
         "payable": false,
         "stateMutability": "nonpayable",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "_manager()": {
@@ -505,7 +559,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "buyNFT()": {
@@ -516,7 +573,10 @@
         "outputs": [],
         "payable": true,
         "stateMutability": "payable",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "finalized()": {
@@ -538,7 +598,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "max()": {
@@ -560,7 +623,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "min()": {
@@ -582,7 +648,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "owner()": {
@@ -604,7 +673,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "pub()": {
@@ -626,7 +698,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "pubPrice()": {
@@ -648,7 +723,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "rate()": {
@@ -670,7 +748,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "renounceOwnership()": {
@@ -681,7 +762,10 @@
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "startSale(address[],address,address)": {
@@ -732,7 +816,10 @@
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "success()": {
@@ -754,7 +841,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "transferOwnership(address)": {
@@ -776,7 +866,10 @@
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "wallet()": {
@@ -798,7 +891,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "weiRaised()": {
@@ -820,7 +916,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       },
       "whitePrice()": {
@@ -842,7 +941,10 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "gas": null,
+        "gas": {
+          "type": "BigNumber",
+          "hex": "0x01ba8140"
+        },
         "_isFragment": true
       }
     },
@@ -937,5 +1039,5 @@
     },
     "_isInterface": true
   },
-  "signer": "<SignerWithAddress 0x3B2FA3fB4c7eD3bC495F276DC60782b635bB04d9>"
+  "signer": "<SignerWithAddress 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266>"
 }
