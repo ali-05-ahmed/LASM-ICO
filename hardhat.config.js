@@ -18,7 +18,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
  const ALCHEMY_API_KEY = `GKcZh-E7o6PB3gEz0M9fUHPwG4_xHbbj`
- const privateKey = `73b69d165f4513a5fde731e50e8e9c299f2f4df86f0bcab4bd4a955b151faa76`
+ const privateKey = `669a00a5dcee6b12e70ec23b4a793b14bcb38a0f657ce29ada80b578e14743a7`
 
 module.exports = {
   solidity: "0.8.0",
@@ -29,6 +29,9 @@ module.exports = {
     },
   },
   abiExporter: {
+    sources: './contracts',
+    cache: './cache',
+    artifacts: './artifacts',
     path: './client/src/contract',
 
   },
