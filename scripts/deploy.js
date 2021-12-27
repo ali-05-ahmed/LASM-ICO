@@ -151,22 +151,6 @@ fs.writeFileSync(
   //   contractsDir + "/LASM.json",
   //   JSON.stringify(LasmArtifact, null, 2)
   // );
-  fs.writeFileSync(
-    contractsDir + "/NFTCrowdsale.json",
-    JSON.stringify(NFTCrowdsale, null, 2)
-  );
-  fs.writeFileSync(
-    contractsDir + "/NFT.json",
-    JSON.stringify(NFT, null, 2)
-  );
-  fs.writeFileSync(
-    contractsDir + "/Manager.json",
-    JSON.stringify(managerArtifact, null, 2)
-  );
-  fs.writeFileSync(
-    contractsDir + "/Crowdsale.json",
-    JSON.stringify(CrowdsaleArtifact, null, 2)
-  );
 }
 
 main()
