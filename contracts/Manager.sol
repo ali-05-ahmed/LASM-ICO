@@ -13,6 +13,7 @@ import "./NFTCrowdsale.sol";
 
 
 
+
 contract Manager is Context, Ownable {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
@@ -26,18 +27,19 @@ contract Manager is Context, Ownable {
     address[] public rounds;
 
 
-    uint256 private constant cap = 10  ** 18  ;
-    uint256 public durationCap = block.timestamp + 94694400 * 1 seconds;
+    uint256 private constant cap = 8*10**26;
+    uint256 public durationCap = block.timestamp + 10518972 * 1 seconds;
     uint256 totalSuply;
-    uint256 public unlock;
+    uint256 public unlock = (cap/100)*15;
     uint256 public spend;
     uint256 public psale;
-       
+    
     constructor(address token_,address owner_){
+
         transferOwnership(owner_);
         token = ERC20(token_);
        
-        lock();
+       /// lock();
         spend=0;
         
     }
@@ -80,10 +82,11 @@ contract Manager is Context, Ownable {
     function transfer(
         address recipient,
         uint256 amount
-    ) public payable virtual onlyOwner {
+    ) public payable virtual onlyOwner returns(bool) {
         require(transferCheck(amount)==true , "cannot transfer :: TOKEN LOCKED");
         token.safeTransfer(recipient, amount);
         spend = spend + amount;
+        return true;
     }
 
     function create_TokenSale(uint256 lockTime,uint256 rate,uint256 percent,address payable wallet,uint256 min) public onlyOwner{
@@ -93,30 +96,16 @@ contract Manager is Context, Ownable {
             bool status = sale.finalized();
             require(status == true,"Sale in progress");
         }
-        require(percent<=60,"percentage must be less than 60");
+        require(percent<=15,"percentage must be less than 15");
         Crowdsale ico;
         psale = (cap*percent)/100;
         ico = new Crowdsale(lockTime,rate,wallet,IERC20(address(token)),payable(address(this)),min,psale); 
         ico_addr = address(ico);
-        transfer (ico_addr,psale);
+        require(transfer (ico_addr,psale));
         rounds.push(ico_addr);
     } 
 
-    // function create_NftPreSale(address[] memory accounts,address payable wallet,address _nft) public onlyOwner{
-    //     NFTCrowdsale ico;      
-    //     ico = new NFTCrowdsale(accounts,wallet,_nft,payable(address(this))); 
-    //     NftPresale_addr = address(ico);
-      
-    // } 
-
-    // function create_NftPubSale(address payable wallet,address _nft) public onlyOwner{
-    //     NFTCrowdsale ico;
-    //     address[] memory accounts;
-    //     ico = new NFTCrowdsale(accounts,wallet,_nft,payable(address(this))); 
-    //     NftPubsale_addr = address(ico);
-       
-    // } 
- 
+   
 
 }
 

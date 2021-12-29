@@ -39,11 +39,51 @@ describe("LASM",  function ()  {
      Manager = await ethers.getContractFactory("Manager");
      manager = await Manager.attach(manager_addr)
 
+     let bal = await lasm.balanceOf(manager_addr);
   
-     
+     console.log("balance of manager :",bal.toString())
+     bal = await lasm.balanceOf(lasm.team());
+     console.log("balance of team :",bal.toString())
 
+    //  let tx = await lasm.balanceOf(_.address)
+    //  console.log("balance of my :",tx.toString())
 
-   //  create_NftPreSale
+    //  let tx = await lasm.transfer(per1.address,100000000);
+    //  await tx.wait()
+     let  aabal = await lasm.balanceOf(per1.address);
+     await console.log("balance of team :",aabal.toString())
+     aabal = await lasm.balanceOf(per1.address);
+     await console.log("balance of per1 :",aabal.toString())
+     aabal = await lasm.balanceOf(lasm.Marketing());
+     await console.log("balance of mar :",aabal.toString())
+    //  aabal = await lasm.balanceOf(per1.address);
+    //  await console.log("balance of team :",aabal.toString())
+
+      let total = await lasm.totalSupply()
+      console.log(total.toString())
+      let createsale = await manager.create_TokenSale(300,1,10,_.address,1);
+      await createsale.wait()
+
+      bal = await lasm.balanceOf(manager_addr);
+  
+    await console.log("balance of manager :",bal.toString())
+     let icoAddr = await manager.ico_addr();
+     Crowdsale = await ethers.getContractFactory("Crowdsale");
+     let ico = await Crowdsale.attach(icoAddr)
+     let _value = await ethers.utils.parseEther('0.5')
+      // let buy = await ico.connect(per3).buyTokens({value:_value})
+      // await buy.wait()
+      await new Promise(resolve => setTimeout(resolve, 3000));
+     let Finalize = await ico.Finalize();
+    await Finalize.wait()
+    bal = await lasm.balanceOf(manager_addr);
+  
+    await console.log("balance of manager :",bal.toString())
+    createsale = await manager.create_TokenSale(300,2,10,_.address,1);
+    await createsale.wait()
+    bal = await lasm.balanceOf(manager_addr);
+  
+   await console.log("balance of manager :",bal.toString())
   });
   it("Should return the new greeting once it's changed", async function () {
 

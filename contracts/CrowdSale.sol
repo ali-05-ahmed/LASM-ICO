@@ -49,8 +49,8 @@ contract Crowdsale is Context, ReentrancyGuard {
     mapping (address => uint256) msgValue;
     uint256 current = block.timestamp * 1 seconds;
     uint256 immutable limitationtime ;
-    uint256 buyTime = block.timestamp + 15 days;
-     mapping(address => bool) private _whitelist;
+    uint256 buyTime = block.timestamp + 2 seconds;//+ 15 days
+    mapping(address => bool) private _whitelist;
     // address[] private _whitelist;
     //  bool public isFinalized = false;
     //  Manager manager;
