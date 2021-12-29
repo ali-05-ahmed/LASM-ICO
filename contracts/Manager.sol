@@ -6,10 +6,9 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-// import "../math/SafeMath.sol";
 import "hardhat/console.sol";
 import "./CrowdSale.sol";
-import "./NFTCrowdsale.sol";
+import "./LASM.sol";
 
 
 
@@ -18,98 +17,43 @@ contract Manager is Context, Ownable {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
    
-    IERC20 token;
-    address nft_addr;
-    address public crowdsale_addr ;
-    address public NftPresale_addr ;
-    address public NftPubsale_addr ;
+    LASM token;
+    address token_addr;
     address public ico_addr ;
     address[] public rounds;
-
-
-    uint256 private constant cap = 8*10**26;
-    uint256 public durationCap = block.timestamp + 10518972 * 1 seconds;
-    uint256 totalSuply;
-    uint256 public unlock = (cap/100)*15;
-    uint256 public spend;
-    uint256 public psale;
     
-    constructor(address token_,address owner_){
-
-        transferOwnership(owner_);
-        token = ERC20(token_);
-       
-       /// lock();
-        spend=0;
-        
-    }
     receive () external payable {}
 
-
-
-    function updateSpend(uint256 amount) public {
-        require(_msgSender()==ico_addr,"not the Owner");
-        spend=spend-amount;
+    function setToken(address token_) public onlyOwner{
+        token_addr = token_;
+          token = LASM(token_);
     }
-    function transferCheck(uint256 amount) internal view returns(bool){
-        uint256 current = block.timestamp * 1 seconds;
-
-        if(current < durationCap){
-          //  uint256 remaining = cap - token.balanceOf(address(this));
-
-            if(spend+amount <= unlock){
-                return true;
-        }
-        else{
-            return false;
-        }
-        
-        }
-       else{
-           return true;
-       }
-    }
-
-    function balance() public view returns(uint256){
-        return token.balanceOf(address(this));
-    }
-    
-    function lock() public {
-        uint256 success = (cap*40)/100;
-        unlock = cap - success;    
+    function getToken() public view returns(address){
+          return token_addr;
     }
 
     function transfer(
         address recipient,
         uint256 amount
     ) public payable virtual onlyOwner returns(bool) {
-        require(transferCheck(amount)==true , "cannot transfer :: TOKEN LOCKED");
-        token.safeTransfer(recipient, amount);
-        spend = spend + amount;
+        token.transfer(recipient, amount);
         return true;
     }
 
-    function create_TokenSale(uint256 lockTime,uint256 rate,uint256 percent,address payable wallet,uint256 min) public onlyOwner{
+    function create_TokenSale(uint256 lockTime,uint256 rate,uint256 amount,address payable wallet,uint256 min) public onlyOwner{
+        require(getToken()!=address(0),"set Token forSale");
         if(rounds.length > 0){
             address sale_addr =  rounds[rounds.length-1];
             Crowdsale sale = Crowdsale(payable(sale_addr));
             bool status = sale.finalized();
             require(status == true,"Sale in progress");
         }
-        require(percent<=15,"percentage must be less than 15");
+        require(amount <= token.balanceOf(address(this)),"not enough amount");
         Crowdsale ico;
-        psale = (cap*percent)/100;
-        ico = new Crowdsale(lockTime,rate,wallet,IERC20(address(token)),payable(address(this)),min,psale); 
+        ico = new Crowdsale(lockTime,rate,wallet,IERC20(address(token)),payable(address(this)),min); 
         ico_addr = address(ico);
-        require(transfer (ico_addr,psale));
+        token.addNoTax(ico_addr);
+        require(transfer(ico_addr,amount));
         rounds.push(ico_addr);
-    } 
-
-   
-
+    }
 }
-
-//all erc20 transfer functionality
-//start-finalize preSale
-//start-finalize ICO
-

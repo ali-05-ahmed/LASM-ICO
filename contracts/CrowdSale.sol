@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "./Manager.sol";
+
 
 
 
@@ -20,7 +20,6 @@ contract Crowdsale is Context, ReentrancyGuard {
     // Address where funds are collected
     address payable private _wallet;
     address payable public _manager;
-    Manager manager;
 
     // How many token units a buyer gets per wei.
     // The rate is the conversion between wei and the smallest and indivisible token unit.
@@ -28,7 +27,6 @@ contract Crowdsale is Context, ReentrancyGuard {
     // 1 wei will give you 1 unit, or 0.001 TOK.
     uint256 private _rate;
     uint256 public min;
-    uint256 public max;
     uint256 public minBuy = 0.5 ether;
     uint256 public maxBuy = 1 ether;
     
@@ -50,33 +48,19 @@ contract Crowdsale is Context, ReentrancyGuard {
     uint256 current = block.timestamp * 1 seconds;
     uint256 immutable limitationtime ;
     uint256 buyTime = block.timestamp + 2 seconds;//+ 15 days
-    mapping(address => bool) private _whitelist;
-    // address[] private _whitelist;
-    //  bool public isFinalized = false;
-    //  Manager manager;
+    
     constructor (uint256 lockTime,uint256 rate_, address payable wallet_, IERC20 token_, address payable manager_,
-    uint256 _min , uint256 _max) {
+    uint256 _min) {
         require(rate_ > 0, "Crowdsale: rate is 0");
-        
         require(address(token_) != address(0), "Crowdsale: token is the zero address");
-
-        // for (uint256 i = 0; i < accounts.length; i++) {
-        //     _addPayee(accounts[i]);
-        // }
         _rate = rate_;
         _wallet = wallet_;
         _token = token_;
         _manager = manager_;
-        manager = Manager(manager_);
         min=_min;
-        max = _max;
         limitationtime = block.timestamp + lockTime   * 1 seconds;
-      
     }
-    // function sale () public{
-    //     uint buy ;
-    // }
-
+    
 
     /**
      * @dev fallback function ***DO NOT OVERRIDE***
@@ -129,8 +113,7 @@ contract Crowdsale is Context, ReentrancyGuard {
 
     
     function buyTokens() public nonReentrant payable {
-       // require (_whitelist[_msgSender()] == true,"you are not whitelisted");
-        require ( buyTime > block.timestamp, "not running");
+        require ( buyTime > block.timestamp, "Buy Time expired");
 
         uint256 weiAmount = msg.value;
         require(weiAmount >=minBuy && weiAmount <=maxBuy,"please send value according to limit");
@@ -142,16 +125,13 @@ contract Crowdsale is Context, ReentrancyGuard {
 
         // update state
         _weiRaised = _weiRaised.add(weiAmount);
-
-      //  _updatePurchasingState(beneficiary, weiAmount);
+        
             msgValue[_msgSender()] = msgValue[_msgSender()] + weiAmount;
             purchase[msg.sender]=purchase[msg.sender]+tokens;
        
     }
 
     function claim() public payable {
-
-    //    require (_whitelist[_msgSender()] == true,"Address not allowed");
         require (block.timestamp > limitationtime);
         require (finalized,"ICO not finalized yet");
 
@@ -179,35 +159,10 @@ contract Crowdsale is Context, ReentrancyGuard {
         }
          uint256 remainingTokensInTheContract = _token.balanceOf(address(this)) - _tokenPurchased;
         _token.safeTransfer(address(_manager),remainingTokensInTheContract);
-         manager.updateSpend(remainingTokensInTheContract);
         _forwardFunds(_weiRaised);
         finalized = true;
         return success;
     }
-
-    
-
-  
-
-    // function end () external{
-    //     if(block.timestamp >= limitationtime){
-    //         address afr;
-    //        return afr=address(manager);
-    //     }else{
-
-    //     }
-    // }
-    
-    // function finalization() internal {
-    //   token.transferOwnership(msg.sender);
-    //   super.finalization();
-    // }
-    // function finalizeIfNeeded () internal {
-    // if (!finalized && block.timestamp >= crowdsaleEndTime) {
-    //     finalization ();
-    //     finalized = true;
-    // }
-
 
     /**
      * @dev Validation of an incoming purchase. Use require statements to revert state when conditions are not met.
@@ -280,10 +235,5 @@ contract Crowdsale is Context, ReentrancyGuard {
         _wallet.transfer(amount);
     }
 
-    //  function _addPayee(address account) private {
-    //     require(account != address(0), "PaymentSplitter: account is the zero address");
-    //     _whitelist[account]=true;
-       
-    // }
       
 }

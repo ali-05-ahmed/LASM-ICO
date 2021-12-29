@@ -7,19 +7,23 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import "./Manager.sol";
 
 
-contract LASM is ERC20 ,ERC20Burnable,Ownable {
+
+contract LASM is ERC20 , ERC20Burnable, Ownable {
+
+    // beneficiary of tokens after they are released
+    address private immutable _beneficiary;
+
+    // timestamp when token release is enabled
+    uint256 private immutable _releaseTime;
    
     uint256 private constant cap = 8*10**26;
 
-    Manager manager;
+    address public immutable _manager;
 
-    
 
     address public constant team = address(0xA756262bDF22dDC488BF22c3d4b83EE4493110ee);
-   // address public team;
     address public constant Development = address(0x17ee3fB7737B14192A787101da9c07FdfDaddDe4);
     address public constant Marketing = address(0x361967dA580Ff440fAa3730d5d7207BDb5E1C816);
     address public constant GameRewards = address(0xc3584Db27d65b57bc17D861198B876A6dE452E1B);
@@ -31,17 +35,23 @@ contract LASM is ERC20 ,ERC20Burnable,Ownable {
     mapping(address=>bool) private noTax;
 
                                     
-    constructor() ERC20("LASM", "LASM") {
-        
-        manager = new Manager(address(this),_msgSender());
-      //  team = _msgSender();
-        _mint(address(manager) , (cap/100)*55);
+    constructor(address manager,address beneficiary_ ,uint256  releaseTime_ ) ERC20("LASM", "LASM") 
+         {
+
+        _beneficiary = beneficiary_;
+        _releaseTime = block.timestamp + releaseTime_ * 1 seconds;
+        _manager = manager;
+        _mint(manager , (cap/100)*15);
+        _mint(address(this) , (cap/100)*40);
         _mint(team , (cap/100)*10);
         _mint(Development , (cap/100)*10);
         _mint(Marketing , (cap/100)*8);
         _mint(GameRewards , (cap/100)*10);
         _mint(airdrop , (cap/100)*7);
-        noTax[address(manager)]=true;
+        noTax[_msgSender()]=true;
+        noTax[beneficiary_]=true;
+        noTax[address(this)]=true;
+        noTax[manager]=true;
         noTax[team]=true;
         noTax[Development]=true;
         noTax[Marketing]=true;
@@ -49,11 +59,10 @@ contract LASM is ERC20 ,ERC20Burnable,Ownable {
         noTax[airdrop]=true;
     }
 
-    function manager_addr() public view returns(address){
-        return address(manager);
-    }
+    
 
-    function addNoTax(address account)public onlyOwner{
+    function addNoTax(address account)public{
+        require(_msgSender()==owner() || _msgSender()==_manager,"Ownable: caller is not the owner");
          noTax[account]=true;
     }
 
@@ -109,6 +118,30 @@ contract LASM is ERC20 ,ERC20Burnable,Ownable {
         }
     }
 
-    
+    /**
+     * @return the beneficiary of the tokens.
+     */
+    function beneficiary() public view virtual returns (address) {
+        return _beneficiary;
+    }
+
+    /**
+     * @return the time when the tokens are released.
+     */
+    function releaseTime() public view virtual returns (uint256) {
+        return _releaseTime;
+    }
+
+    /**
+     * @notice Transfers tokens held by timelock to beneficiary.
+     */
+    function release() public virtual {
+        require(block.timestamp >= releaseTime(), "TokenTimelock: current time is before release time");
+
+        uint256 amount = balanceOf(address(this));
+        require(amount > 0, "TokenTimelock: no tokens to release");
+
+        ERC20._transfer(address(this),beneficiary(),  amount);
+    }
 
 }
